@@ -7,7 +7,7 @@ var port = process.env.PORT || 5000
 //constant
 var fs = require('fs');
 eval(fs.readFileSync('./constant.js')+'');
-eval(fs.readFileSync('./rummyo.js')+'');
+eval(fs.readFileSync('./rummikub.js')+'');
 
 //start server
 app.use(express.static(__dirname + "/"))
@@ -20,7 +20,7 @@ var webSocketServer = new WebSocketServer({server: server})
 console.log("websocket server created");
 
 //static variable
-var rummyo = new RummyO();
+var rummikub = new Rummikub();
 var gamePlayingFlag = false;
 var turnCount = 1;
 var currentPlayer = {};
@@ -32,17 +32,17 @@ var sec = 0;
 //broadcast client
 webSocketServer.broadcast = function(data) {
     //console.log("[broadcast msg]=" + JSON.stringify(data));
-    for (var i in rummyo.users) {
-        rummyo.users[i].ownWebsocket.send(JSON.stringify(data));
+    for (var i in rummikub.users) {
+        rummikub.users[i].ownWebsocket.send(JSON.stringify(data));
     }
 };
 
 //send specific client
 webSocketServer.sendMessage = function(data, id) {
     //console.log("[send msg -> " + id + "]=" + JSON.stringify(data));
-    for (var i in rummyo.users) {
-        if(id == rummyo.users[i].id) {
-            rummyo.users[i].ownWebsocket.send(JSON.stringify(data));
+    for (var i in rummikub.users) {
+        if(id == rummikub.users[i].id) {
+            rummikub.users[i].ownWebsocket.send(JSON.stringify(data));
         }
     }
 };
@@ -51,7 +51,7 @@ webSocketServer.sendMessage = function(data, id) {
 webSocketServer.on("connection", function(ws) {
 
     var user = new User(BOARD.USER_PREFIX + UTIL.random4digit(), ws, UTIL.randomChatColor());
-    rummyo.users.push(user);
+    rummikub.users.push(user);
 
     processJoin(user);
     
@@ -111,8 +111,8 @@ webSocketServer.on("connection", function(ws) {
 
         var usersInfo = [];
 
-        for (var i in rummyo.users) {
-            usersInfo.push(userInfo(rummyo.users[i]));
+        for (var i in rummikub.users) {
+            usersInfo.push(userInfo(rummikub.users[i]));
         }
 
         return usersInfo;
@@ -127,17 +127,17 @@ webSocketServer.on("connection", function(ws) {
         winner.id = "";
         winner.score = 0;
 
-        for(var idx in rummyo.users) {
-            if(rummyo.users[idx].own.length == 0) {
-                winner.id = rummyo.users[idx].id;
+        for(var idx in rummikub.users) {
+            if(rummikub.users[idx].own.length == 0) {
+                winner.id = rummikub.users[idx].id;
             }else {
                 var loser = {};
                 loser.isWin = false;
-                loser.id = rummyo.users[idx].id;
+                loser.id = rummikub.users[idx].id;
                 loser.score = 0;
-                for(var ownIdx in rummyo.users[idx].own) {
-                    loser.score -= Number(rummyo.users[idx].own[ownIdx].score);
-                    winner.score += Number(rummyo.users[idx].own[ownIdx].score);
+                for(var ownIdx in rummikub.users[idx].own) {
+                    loser.score -= Number(rummikub.users[idx].own[ownIdx].score);
+                    winner.score += Number(rummikub.users[idx].own[ownIdx].score);
                 }
                 userScoreInfo.push(loser);
             }
@@ -156,21 +156,21 @@ webSocketServer.on("connection", function(ws) {
     function processStart(user) {
 
         gamePlayingFlag = true;
-        rummyo.initializeGame();
+        rummikub.initializeGame();
 
         // select next turn player    
-        currentPlayer = rummyo.users[turnCount % rummyo.users.length];
+        currentPlayer = rummikub.users[turnCount % rummikub.users.length];
 
-        for(var idx in rummyo.users) {
-            webSocketServer.sendMessage(UTIL.makeCommand( CMD.START, userInfo(rummyo.users[idx]) ), rummyo.users[idx].id);
-            webSocketServer.sendMessage(UTIL.makeCommand( CMD.PRIVATE_INFO, userInfo(rummyo.users[idx]) ), rummyo.users[idx].id);
+        for(var idx in rummikub.users) {
+            webSocketServer.sendMessage(UTIL.makeCommand( CMD.START, userInfo(rummikub.users[idx]) ), rummikub.users[idx].id);
+            webSocketServer.sendMessage(UTIL.makeCommand( CMD.PRIVATE_INFO, userInfo(rummikub.users[idx]) ), rummikub.users[idx].id);
         }
 
         webSocketServer.broadcast(UTIL.makeCommand( CMD.CHAT, MESSAGE.MSG_START) );
         webSocketServer.broadcast(UTIL.makeCommand( CMD.CHAT, UTIL.getMessage(MESSAGE.MSG_NEXT_TURN, currentPlayer.id) ));
         webSocketServer.broadcast(UTIL.makeCommand( CMD.INFO, boardInfo() ));
 
-        //Timer Starts
+        //Timer Start
         sandGlassTimer(true);
 
     }
@@ -180,7 +180,8 @@ webSocketServer.on("connection", function(ws) {
         var validateResult = false;
 
         turnCount++;
-        currentPlayer = rummyo.users[turnCount % rummyo.users.length];
+        // select next turn player
+        currentPlayer = rummikub.users[turnCount % rummikub.users.length];
         
         for(var i=0; i<BOARD.HEIGHT; i++) {
 			for(var j=0; j<BOARD.WIDTH; j++) {
@@ -195,12 +196,18 @@ webSocketServer.on("connection", function(ws) {
 				
 			}
         }
+
         if(user.use.length == 0) {
             processPenalty(user, param.isTimeout);
         }else {
 
-            if(rummyo.validateTile(param.board)) {
+            if(rummikub.validateTile(param.board)) {
                 if(user.registerYN) {
+
+                    //console.log("\n\n\n========= user own ========");
+                    //console.log(user.own);
+                    //console.log("===========================");
+
                     if(user.own.length == 0) {
                         processWin();
                         return;
@@ -250,7 +257,7 @@ webSocketServer.on("connection", function(ws) {
     function processPenalty(user, isTimeout) {
 
         var numberOfPenaltyTile = isTimeout ? BOARD.PENALTY_THREE : BOARD.PENALTY_ONE;
-        var penaltyTiles = rummyo.penaltyTile(numberOfPenaltyTile);
+        var penaltyTiles = rummikub.penaltyTile(numberOfPenaltyTile);
 
         user.own = user.own.concat(penaltyTiles);
 
@@ -292,6 +299,9 @@ webSocketServer.on("connection", function(ws) {
 
             processChangeName(message);
 			
+        }else if(message.indexOf(INLINE_CMD.RESTART) == 0 ) {
+            processRestart(message);
+
         }else {
             var obj = {};
             obj.text = user.id + " : " + message;
@@ -305,7 +315,7 @@ webSocketServer.on("connection", function(ws) {
         console.log("websocket connection close");
 
         //client & connect count delete        
-        rummyo.removeUser(user.id);
+        rummikub.removeUser(user.id);
         turnCount = 1;
 
         webSocketServer.broadcast(UTIL.makeCommand( CMD.CHAT, UTIL.getMessage(MESSAGE.MSG_DISCONNECT, user.id) ));
@@ -332,6 +342,10 @@ webSocketServer.on("connection", function(ws) {
         webSocketServer.broadcast(UTIL.makeCommand( CMD.CHAT, UTIL.getMessage(MESSAGE.MSG_CHANGE_NAME, originName, newName) ));
         webSocketServer.sendMessage(UTIL.makeCommand( CMD.PRIVATE_INFO, userInfo(user) ), user.id);
         webSocketServer.broadcast(UTIL.makeCommand( CMD.INFO, boardInfo() ));
+    }
+
+    function processRestart(param){
+        window.location.reload();
     }
 
     function sandGlassTimer(enable) {

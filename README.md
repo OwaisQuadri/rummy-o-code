@@ -1,3 +1,3 @@
-# Rummikub Websocket Version
+# Rummikub Final Project
 
-Rummikub-clone project using WebSocket
+Enter execution instructions here: 
