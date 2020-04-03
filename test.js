@@ -1,9 +1,9 @@
 var test = require('unit.js');
 var fs = require('fs');
 eval(fs.readFileSync('./constant.js')+'');
-eval(fs.readFileSync('./rummikub.js')+'');
+eval(fs.readFileSync('./rummyo.js')+'');
 
-describe('Rummikub Test', function(){
+describe('Rummy-O Test', function(){
     
   it('example', function(){
     // just for example of tested value
