@@ -1,0 +1,15 @@
+{
+  "name": "rummi",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.4.5",
+    "ws": "0.4.x" ,
+    "es6-set": "0.1.4"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

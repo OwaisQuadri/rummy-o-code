@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title>Rummy-O Game</title>
+	<link rel="stylesheet" type="text/css" href="./css/basic.css">
+	<link rel="stylesheet" type="text/css" href="./css/rummi.css">
+	<script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="./js/jquery-1.11.3.ui.min.js"></script>
+	<script type="text/javascript" src="./js/redips-drag-min.js"></script>
+	<script type="text/javascript" src="./rummikub.js"></script>
+	<script type="text/javascript" src="./constant.js"></script>
+	<script type="text/javascript" src="./game.js"></script>
+	<script type="text/javascript" src="./sound.js"></script>
+	<script type="text/javascript">
+	  $(document).ready(function() {
+		Game.main();
+	  });
+	</script>
+  </head>
+  <body>
+    
+	<div class="menu">
+      <span class="info">
+		<span id="myInfo"></span>
+		<span id="gamePlaying"></span>
+		<span id="turnCount"></span>
+		<span id="usersInfo"></span>
+      </span>
+      <button type="submit" id="gameBtn">Play</button>
+      <button id="messageBtn">Live Chat</button>
+      <span id="sandGlass"></span>
+	</div>
+	
+	<div id="redips-drag">
+      <div id="wrap">
+		<table class="gameBoard" id="gameBoard"></table>
+		<table class="ownBoard" id="ownBoard"></table>
+	  </div>
+	</div>
+
+	<div class="fixed" id="floatingMessage">
+      <div class="messageBox" id="messages"></div>
+      <div class="sendBox">
+		<input id="msg" type="text" placeholder="Send a message">
+		<button id="sendBtn">Chat</button>
+      </div>
+	</div>
+
+	<div id="dialog">
+	</div>
+
+  </body>
+</html>

@@ -1,0 +1,93 @@
+body {width: 100%; height: 100%;}
+#wrap {width: 100%; height: 100%;}
+.card {cursor: pointer; border: 1px solid #ACACAC; border-radius: 4px; width: 50px; height: 80px; background: #E5DCC7; padding: 10px 0 0 0; overflow: hidden; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left;}
+span.circle {font-size: 25px; font-weight: bold; border-radius: 20px; width: 40px; display: block; text-align: center; margin: 0 auto; padding: 8px 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+span.red {border: 2px solid #DC143C; color: #DC143C}
+span.blue {border: 2px solid #0000CD; color: #0000CD}
+span.black {border: 2px solid #000000; color: #000000}
+span.yellow {border: 2px solid #EEAD0E; color: #EEAD0E}
+span.jo_eye {width: 10px; height: 10px; border-radius: 50%; box-shadow: 2px 2px 0 0 #DC143C; display: block; float: left; margin: 0 7px; -webkit-transform: rotate(-135deg);
+-moz-transform: rotate(-135deg);
+ -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+     transform: rotate(-135deg);} */
+span.jo_mouth {width: 20px; height: 20px; border-radius: 60%; box-shadow: 4px 4px 0 0 #DC143C; -webkit-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+ -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+     transform: rotate(45deg);}
+
+td {
+	width: 50px;
+  height: 80px;
+}
+#gameBoard td + td,
+#gameBoard tr + tr { padding-top: 5px; padding-bottom: 5px; }
+
+#gameBoard {
+  border: 1px solid white;
+  table-layout:fixed;
+}
+
+#ownBoard {
+  border: 1px solid white;
+  table-layout:fixed;
+  background-size:16px 16px;
+  background-color:#575757;
+}
+
+.menu {
+  margin-left: 10px;
+  margin-bottom: 1px;
+  padding-top: 2px;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 100%;
+  background: rgba(25, 25, 25, .5);
+}
+
+.sendBox {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 15px;
+}
+
+.messageBox {
+  color: white;
+  height: 90%;
+  font-size: 15px;
+  padding: 5px;
+  overflow: auto;
+}
+
+#dialog {
+  text-align:center;
+  background: #AEC6CF;
+}
+
+#dialog p {
+  padding-bottom: 15px;
+}
+
+#dialog span {
+  display:inline-block;
+}
+
+/*For jquery ui dialog*/
+.ui-dialog-titlebar {
+    display: none;
+}
+
+#sandGlass {
+  color: #0000CD;
+}
+
+#sandGlass .alert {
+  color: #DC143C;
+}
