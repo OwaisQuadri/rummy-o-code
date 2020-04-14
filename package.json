@@ -2,8 +2,8 @@
   "name": "rummi",
   "version": "0.0.1",
   "dependencies": {
-    "express": "^4.4.5",
-    "ws": "0.4.x" ,
+    "express": "^4.4.5"
+    "ws": ">=1.1.5"
     "es6-set": "0.1.4"
   },
   "engines": {
