@@ -1,12 +1,13 @@
-//RummyO class
-function RummyO () {
+//Rummikub class
+function Rummikub () {
 	this.scores = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
 	this.colors = ['red','blue','yellow','black','red','blue','yellow','black'];
 	this.tiles = [];
 	this.users = [];
 }
 
-RummyO.prototype.shuffle = function(array) {
+//Function to shuffle deck
+Rummikub.prototype.shuffle = function(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = array[i];
@@ -16,7 +17,8 @@ RummyO.prototype.shuffle = function(array) {
     return array;
 };
 
-RummyO.prototype.initializeGame = function() {
+//Initializes game by gathering users
+Rummikub.prototype.initializeGame = function() {
 	
 	this.initializeTiles();
 
@@ -25,7 +27,8 @@ RummyO.prototype.initializeGame = function() {
 	}
 };
 
-RummyO.prototype.initializeTiles = function() {
+//Initializing tiles to user
+Rummikub.prototype.initializeTiles = function() {
 	
 	//init
 	this.tiles = [];
@@ -42,14 +45,16 @@ RummyO.prototype.initializeTiles = function() {
 	this.shuffle(this.tiles);
 };
 
-RummyO.prototype.initializeTilesToUser = function(user) {
+//Distributes tiles to the user
+Rummikub.prototype.initializeTilesToUser = function(user) {
 	user.own = [];
 	for(var idx=0; idx < 14; idx++) {
   		user.own.push(this.tiles.pop());
 	}
 };
 
-RummyO.prototype.removeUser = function(id) {
+//Function to remove users
+Rummikub.prototype.removeUser = function(id) {
 
 	var removeIndex;
 
@@ -63,7 +68,8 @@ RummyO.prototype.removeUser = function(id) {
 	this.users.splice(removeIndex,1);
 };
 
-RummyO.prototype.penaltyTile = function(numberOfPenaltyTile) {
+//Penalty tiles for the first move 
+Rummikub.prototype.penaltyTile = function(numberOfPenaltyTile) {
 
 	var penaltyTile = [];
 	for(var idx=0; idx < numberOfPenaltyTile; idx++) {
@@ -73,7 +79,8 @@ RummyO.prototype.penaltyTile = function(numberOfPenaltyTile) {
 	return penaltyTile;
 };
 
-RummyO.prototype.validateTile = function(param) {
+//Checks if the tiles are valid for group and run
+Rummikub.prototype.validateTile = function(param) {
 
 	var group = [];
     
@@ -100,10 +107,6 @@ RummyO.prototype.validateTile = function(param) {
 			if(serialNumberValidateResult || sameNumverValidateResult) {
 				//console.log("success");
 				continue;
-			}else {
-				
-				return false;
-			
 			}
 
 		}else {
@@ -120,7 +123,8 @@ RummyO.prototype.validateTile = function(param) {
 
 };
 
-RummyO.prototype.validateSerialNumber = function(param) {
+//Validates the tile by the number
+Rummikub.prototype.validateSerialNumber = function(param) {
 
 	//clone param
 	var group = this.clone(param);
@@ -167,7 +171,9 @@ RummyO.prototype.validateSerialNumber = function(param) {
 
 }
 
-RummyO.prototype.validateSameNumber = function(param) {
+
+//Validates the tile by the same number
+Rummikub.prototype.validateSameNumber = function(param) {
 
 	//clone param
 	var group = this.clone(param);
@@ -212,7 +218,7 @@ RummyO.prototype.validateSameNumber = function(param) {
 
 }
 
-RummyO.prototype.clone = function(obj) {
+Rummikub.prototype.clone = function(obj) {
 
 	// Handle the 3 simple types, and null or undefined
 	if (null == obj || "object" != typeof obj) return obj;
@@ -242,7 +248,7 @@ RummyO.prototype.clone = function(obj) {
 		return copy;
 	}
 
-	throw new Error("Object type is not supported");
+	throw new Error("Unable to copy obj! Its type isn't supported.");
 };
 
 //User class
@@ -254,6 +260,7 @@ function User (id, ownWebsocket, chatColor) {
 	this.own = [];
 	this.chatColor = chatColor;
 }	
+
 
 User.prototype.removeOwnTile = function(tile) {
 
@@ -286,6 +293,7 @@ User.prototype.validateRegisterTile = function() {
 	return (sumOfScore >= 30) ? true : false;
 
 };
+
 
 User.prototype.toString = function() {
 	return "id : " + this.id

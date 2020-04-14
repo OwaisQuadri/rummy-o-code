@@ -1,6 +1,8 @@
 body {width: 100%; height: 100%;}
 #wrap {width: 100%; height: 100%;}
-.card {cursor: pointer; border: 1px solid #ACACAC; border-radius: 4px; width: 50px; height: 80px; background: #E5DCC7; padding: 10px 0 0 0; overflow: hidden; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left;}
+
+.card {cursor: pointer; border: 1px solid black; border-radius: 4px; width: 50px; height: 60px; background: beige; padding: 10px 0 0 0; overflow: hidden; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; float: left;}
+
 span.circle {font-size: 25px; font-weight: bold; border-radius: 20px; width: 40px; display: block; text-align: center; margin: 0 auto; padding: 8px 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 span.red {border: 2px solid #DC143C; color: #DC143C}
 span.blue {border: 2px solid #0000CD; color: #0000CD}
@@ -10,7 +12,7 @@ span.jo_eye {width: 10px; height: 10px; border-radius: 50%; box-shadow: 2px 2px 
 -moz-transform: rotate(-135deg);
  -ms-transform: rotate(-135deg);
   -o-transform: rotate(-135deg);
-     transform: rotate(-135deg);} */
+     transform: rotate(-135deg);}
 span.jo_mouth {width: 20px; height: 20px; border-radius: 60%; box-shadow: 4px 4px 0 0 #DC143C; -webkit-transform: rotate(45deg);
 -moz-transform: rotate(45deg);
  -ms-transform: rotate(45deg);
@@ -33,7 +35,7 @@ td {
   border: 1px solid white;
   table-layout:fixed;
   background-size:16px 16px;
-  background-color:#575757;
+  background-color:#8A450B;
 }
 
 .menu {
@@ -46,8 +48,9 @@ td {
   position: fixed;
   top: 0;
   right: 0;
-  width: 220px;
+  width: 300px;
   height: 100%;
+
   background: rgba(25, 25, 25, .5);
 }
 

@@ -1,4 +1,4 @@
-//constant
+//constant variables 
 var BOARD = {
 	WIDTH : 22,
 	HEIGHT : 6,
@@ -17,6 +17,7 @@ var BOARD = {
 	USER_PREFIX : "USER_"
 }
 
+//For node.js console
 var CMD = {
 	CHAT : "::CHAT::",
 	JOIN : "::JOIN::",
@@ -33,15 +34,18 @@ var CMD = {
 	TIMER : "::TIMER::"
 };
 
+//For functions initiated from user
 var INLINE_CMD = {
 	"HELP" : "/?",
-	"CHANGE_NAME" : "/name"
+	"CHANGE_NAME" : "/name",
+	"RESTART" : "/r"
 };
 
+//For messages 
 var MESSAGE = {
 	MSG_BTN_START : "Start",
 	MSG_BTN_NEXT_TURN : "End turn",
-	MSG_START : "The game has started.<br/>======================<br/><br/>Welcome to Rummy-O. <br/>Press /? for instructions. <br/>To enter your username, enter command /name [username].<br /><br />======================<br/><br/>",
+	MSG_START : "The game has started.<br/>===============================<br/><br/>Welcome to Rummy-O. <br/>Press /? for instructions. <br/>To enter your username, enter command /name [username].<br/><br/>===============================<br/><br/>",
 	MSG_EXIT : "The game is over.",
 	MSG_TURN : "{0} You have ended your turn.",
 	MSG_NEXT_TURN : "{0}'s turn.",
@@ -58,8 +62,9 @@ var MESSAGE = {
 	MSG_UNREGISTER : "(unregister)",
 	MSG_REMAIN_TILES : "{0} tiles remaining",
 	MSG_TIMER : "{0} seconds remain until end of turn.",
-	MSG_HELP : "<span style=\"color:Gold;\"><br />======================<br/><br/>Rummy-O Instructions<br/><br/>There are many options to win the game. One way is to put all 3 or 4 of the same numbers with different colors, or 3 or more tiles of the same color and consecutive numbers. For the first move, you must make your first move with a group or run carrying at least 30 points in total. If it is less than 30, you have to draw a tile from the table and add it to the rack. If you don't play anything you will get 3 penalty tiles. After that you have to wait for your next move. <br/><br/>======================<br/><br/></span>",
-	MSG_CHANGE_NAME : "{0} has been renamed to {1}."
+	MSG_HELP : "<span style=\"color:Gold;\"><br />===============================<br/><br/>Rummy-O Instructions<br/><br/>There are many options to win the game. One way is to put all 3 or 4 of the same numbers with different colors, or 3 or more tiles of the same color and consecutive numbers. For the first move, you must make your first move with a group or run carrying at least 30 points in total. If it is less than 30, you have to draw a tile from the table and add it to the rack. If you don't play anything you will get 3 penalty tiles. After that you have to wait for your next move. <br/><br/>===============================<br/><br/></span>",
+	MSG_CHANGE_NAME : "{0} has been renamed to {1}.",
+	MSG_RESTART : "The game is restarted."
 };
 
 var UTIL = {

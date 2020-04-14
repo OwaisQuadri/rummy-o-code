@@ -15,7 +15,7 @@ var ws;
 var user={};
 
 var Game = {
-
+	
 	main: function() {
 		ws = Game.webSocketConnect();
 		ws.onmessage = function (event) {
@@ -32,7 +32,6 @@ var Game = {
 			}else if(responseObject.command == CMD.TURN) {
 
 				Game.processTurn(responseObject.param);
-				Sound.playEffect("bell");
 
 			}else if(responseObject.command == CMD.ROLLBACK) {
 
@@ -91,8 +90,6 @@ var Game = {
 		//REDIPS Initialize
 		Redips.initialize();
 
-		//Sound Initialize
-		Sound.initialize();
 	},
 
 	registerButtonEvent: function() {
@@ -326,7 +323,6 @@ var Game = {
 
 		if (message instanceof Object) {
 			$("#messages").append("<p style='color:" + message.color + "'>" + message.text + "</p>");
-			Sound.playEffect("chat");
 		}else{
 			$("#messages").append("<p style='color:" + BOARD.MESSAGE_COLOR + "'>" + message + "</p>");
 		}
@@ -475,12 +471,11 @@ var Game = {
 		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("R", "red", false), standX, standY);
 		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("u", "red", false), standX, standY+1);
 		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("m", "red", false), standX, standY+2);
-		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("30", "red", true), standX, standY+3);
-		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("i", "red", false), standX, standY+4);
-
-		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("k", "red", false), standX, standY+5);
-		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("u", "red", false), standX, standY+6);
-		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("b", "red", false), standX, standY+7);
+		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("m", "red", false), standX, standY+3);
+		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("y", "red", false), standX, standY+4);
+		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("-", "red", false), standX, standY+5);
+		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("O", "red", false), standX, standY+6);
+		Game.settingTile("#"+BOARD.GAME_BOARD_ID, new Tile("30", "red", true), standX, standY+7);
 	},
 
 	clearBoard: function(id) {
@@ -516,7 +511,6 @@ var Game = {
 				Game.nextTurn(ws, true); //isTimeout true
 			}
 		} else if (sec < BOARD.TIMER_LIMIT && sec > 0) {
-			Sound.playEffect("alert");
 			$("#sandGlass").html("<span class=\"alert\">" + UTIL.getMessage(MESSAGE.MSG_TIMER, Number(sec)) + "</span>");
 		} else {
 			$("#sandGlass").html(UTIL.getMessage(MESSAGE.MSG_TIMER, Number(sec)));
@@ -539,7 +533,6 @@ var Redips = {
 			if (isMyTurn(user)) {
 				Game.syncBoard();
 			}
-			Sound.playEffect("cardPlace");
 		};
 	},
 
